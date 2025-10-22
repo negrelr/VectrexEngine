@@ -2,15 +2,66 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.esiee</groupId>
-    <artifactId>vectrex-engine</artifactId>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>fr.esiee</groupId>
+  <artifactId>vectrex-engine</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>vectrex-engine</name>
+  <description>Mini moteur 3D wireframe en Java standard</description>
+  <url>https://github.com/ton-user/vectrex-engine</url>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
+  <properties>
+    <!-- Aligner sur ton Java 11 -->
+    <maven.compiler.release>11</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.jupiter.version>5.10.2</junit.jupiter.version>
+    <maven.surefire.version>3.2.5</maven.surefire.version>
+    <exec.plugin.version>3.1.0</exec.plugin.version>
+  </properties>
 
+  <dependencies>
+    <!-- JUnit 5 pour les tests -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Compiler : utilise le release 11 (meilleure compatibilité que source/target) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
+      </plugin>
+
+      <!-- Tests JUnit 5 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.version}</version>
+        <configuration>
+          <useModulePath>false</useModulePath>
+        </configuration>
+      </plugin>
+
+      <!-- Exécuter une classe main via mvn exec:java -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>${exec.plugin.version}</version>
+        <configuration>
+          <!-- Ajuste ici le fully-qualified name de ta classe Main -->
+          <mainClass>fr.esiee.Main</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
